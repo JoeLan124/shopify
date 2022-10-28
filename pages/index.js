@@ -2,6 +2,7 @@ import Head from "next/head";
 import prisma from "lib/prisma";
 import { getProducts } from "lib/data.js";
 import Image from "next/image";
+import { FLIGHT_SERVER_CSS_MANIFEST } from "next/dist/shared/lib/constants";
 
 export default function Home({ products }) {
   return (
@@ -14,23 +15,25 @@ export default function Home({ products }) {
 
       <div className="text-center text-black ">
         <h1 className="mt-4 font-extrabold text-2xl">Shop</h1>
-        <div className="mt-5 mx-auto max-w-sm sm:w-full sm:flex sm:flex-row">
+
+        <div className="mt-20 sm:mx-auto max-w-4xl mx-10">
           {products.map((product) => (
-            <div
-              className="flex flex-col mb-4 sm:w-full rounded-2xl p-2 bg-gradient-to-tl from-green-300 to-blue-300 shadow-lg"
-              key={product.id}
-            >
-              <div className="text-center text-lg pb-1 font-semibold ">
-                {product.title} (${product.price / 100})
+            <div className="mb-4 grid sm:grid-cols-2" key={product.id}>
+              <div>
+                <Image
+                  className="rounded-2xl "
+                  src={`/` + product.image}
+                  width={"400"}
+                  height={"400"}
+                />
               </div>
-              <Image
-                className="rounded-lg"
-                src={"/" + `${product.image}`}
-                alt={product.title}
-                width={300}
-                height={300}
-              />
-              <p className="mt-2">{product.description}</p>
+              <div className="sm:ml-10 mb-20 sm:mb-0">
+                <h2 className="text-3xl font-extrabold">{product.title}</h2>
+                <h3 className="text-2xl font-extrabold mb-4">
+                  ${product.price / 100}
+                </h3>
+                <p className="text-xl">{product.description}</p>
+              </div>
             </div>
           ))}
         </div>
